@@ -14,9 +14,27 @@ app.set("view engine", "ejs");
 // Parent page
 app.get("/", async (request, response) => {
   const allTodos = await Todo.getTodos();
+
+  let overdue = [];
+  let duetoday = [];
+  let duelater = [];
+
+  let currentDate = new Date().toJSON().slice(0, 10);
+  for(let i = 0; i < allTodos.length; i++) {
+    if(allTodos[i].dueDate < currentDate) {
+      overdue.push(allTodos[i]);
+    }
+    if(allTodos[i].dueDate == currentDate) {
+      duetoday.push(allTodos[i]);
+    }
+    if(allTodos[i].dueDate > currentDate) {
+      duelater.push(allTodos[i]);
+    }
+  }
+
   if (request.accepts("html")) {
     response.render("index", {
-      allTodos,
+      allTodos, overdue : overdue, duetoday: duetoday, duelater: duelater
     });
   } else {
     response.json({
@@ -30,19 +48,6 @@ app.use(express.static(path.join(__dirname, "public")));
 // To print the list of todos
 app.get("/todos", async (request, response) => {
   console.log("Todo list");
-  // response.send("todoList");
-  // const todoList = await Todo.findAll();
-
-  // console.log(todoList.every((user) => user instanceof Todo));
-  // console.log(todoList);
-  // console.log("All users:", JSON.stringify(todoList, null, 2));
-  // console.log(todoList.length);
-
-  // return response.json(todoList);
-
-  // return response.json(todoList.map(user => user = user + "\n"));
-
-  // check to print them in separate line
   try {
     const todoList = await Todo.findAll();
     return response.send(todoList);
