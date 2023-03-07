@@ -42,7 +42,7 @@ app.get("/todos", async (request, response) => {
 
   // return response.json(todoList.map(user => user = user + "\n"));
 
-  // check to print then in separate line
+  // check to print them in separate line
   try {
     const todoList = await Todo.findAll();
     return response.send(todoList);
