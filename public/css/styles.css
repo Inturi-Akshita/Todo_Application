@@ -1,9 +1,9 @@
 body {
-    font-family: sans-serif;
-    background: #FFFFFF;
-    padding: 40px;
-  }
+  font-family: sans-serif;
+  background: #ffffff;
+  padding: 40px;
+}
 
-  .Todo-Item:hover .trash-icon{
-    display: block;
-  }
+.Todo-Item:hover .trash-icon {
+  display: block;
+}

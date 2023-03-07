@@ -20,21 +20,24 @@ app.get("/", async (request, response) => {
   let duelater = [];
 
   let currentDate = new Date().toJSON().slice(0, 10);
-  for(let i = 0; i < allTodos.length; i++) {
-    if(allTodos[i].dueDate < currentDate) {
+  for (let i = 0; i < allTodos.length; i++) {
+    if (allTodos[i].dueDate < currentDate) {
       overdue.push(allTodos[i]);
     }
-    if(allTodos[i].dueDate == currentDate) {
+    if (allTodos[i].dueDate == currentDate) {
       duetoday.push(allTodos[i]);
     }
-    if(allTodos[i].dueDate > currentDate) {
+    if (allTodos[i].dueDate > currentDate) {
       duelater.push(allTodos[i]);
     }
   }
 
   if (request.accepts("html")) {
     response.render("index", {
-      allTodos, overdue : overdue, duetoday: duetoday, duelater: duelater
+      allTodos,
+      overdue: overdue,
+      duetoday: duetoday,
+      duelater: duelater,
     });
   } else {
     response.json({
